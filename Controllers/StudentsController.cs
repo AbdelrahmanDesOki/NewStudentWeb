@@ -34,7 +34,7 @@ namespace NewStudentWeb.Controllers
             }
 
             var student = await _context.Students
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Unicode == id);
                 
             if (student == null)
             {
@@ -55,7 +55,7 @@ namespace NewStudentWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,Date_birth")] Student student)
+        public async Task<IActionResult> Create([Bind("Unicode,Name,Email,Date_birth")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -87,9 +87,9 @@ namespace NewStudentWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Date_birth")] Student student)
+        public async Task<IActionResult> Edit(int id, [Bind("Unicode,Name,Email,Date_birth")] Student student)
         {
-            if (id != student.Id)
+            if (id != student.Unicode)
             {
                 return NotFound();
             }
@@ -103,7 +103,7 @@ namespace NewStudentWeb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentExists(student.Id))
+                    if (!StudentExists(student.Unicode))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace NewStudentWeb.Controllers
                 return NotFound();
             }
             var student = await _context.Students
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Unicode == id);
             if (student == null)
             {
                 return NotFound();
@@ -149,7 +149,7 @@ namespace NewStudentWeb.Controllers
 
         private bool StudentExists(int id)
         {
-            return _context.Students.Any(e => e.Id == id);
+            return _context.Students.Any(e => e.Unicode == id);
         }
     }
 }
